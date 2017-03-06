@@ -12,6 +12,13 @@ const loadModule = (cb) => (componentModule) => {
   cb(null, componentModule.default);
 };
 
+function extractSagas(sagaModules) {
+  return sagaModules.reduce((sagas, sagaModule) => {
+    const moduleSagas = sagaModule.default;
+    return sagas.concat(moduleSagas);
+  }, []);
+}
+
 export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars

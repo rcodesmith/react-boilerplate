@@ -33,6 +33,8 @@ import '!file-loader?name=[name].[ext]!./manifest.json';
 import 'file-loader?name=[name].[ext]!./.htaccess';
 /* eslint-enable import/no-unresolved, import/extensions */
 
+import { initPlugins } from './plugins';
+
 import configureStore from './store';
 
 // Import i18n messages
