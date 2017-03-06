@@ -40,6 +40,7 @@ cp('internals/templates/app.js', 'app/app.js');
 cp('internals/templates/global-styles.js', 'app/global-styles.js');
 cp('internals/templates/i18n.js', 'app/i18n.js');
 cp('internals/templates/index.html', 'app/index.html');
+cp('internals/templates/plugins.js', 'app/plugins.js');
 cp('internals/templates/reducers.js', 'app/reducers.js');
 cp('internals/templates/routes.js', 'app/routes.js');
 cp('internals/templates/store.js', 'app/store.js');
