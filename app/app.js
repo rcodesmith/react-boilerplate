@@ -8,6 +8,8 @@
 // Needed for redux-saga es6 generator support
 import 'babel-polyfill';
 
+import { initPlugins, postAppInitHook } from './plugins';
+
 // Import all the third party stuff
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -44,6 +46,8 @@ import './global-styles';
 
 // Import routes
 import createRoutes from './routes';
+
+initPlugins();
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
@@ -127,3 +131,6 @@ if (!window.Intl) {
 if (process.env.NODE_ENV === 'production') {
   require('offline-plugin/runtime').install(); // eslint-disable-line global-require
 }
+
+// TODO: We probably need to wait on promises above for it to be true post-init hook
+postAppInitHook(App);

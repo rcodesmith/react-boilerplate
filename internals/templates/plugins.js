@@ -8,6 +8,11 @@ export function initPlugins() {
   });
 }
 
+export function postAppInitHook(App) {
+  plugins.forEach((pluginEntry) => {
+    pluginEntry.plugin.postAppInitHook(pluginEntry.config, App);
+  });
+}
 export function getPluginRoutes(loadModule, errorLoading, injectSagas) {
   return plugins.reduce((routes, pluginEntry) => routes.concat(pluginEntry.plugin.getRoutes(pluginEntry.config, loadModule, errorLoading, injectSagas)), []);
 }
