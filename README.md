@@ -49,6 +49,12 @@
   <sub>Created by <a href="https://twitter.com/mxstbr">Max Stoiber</a> and maintained with ❤️ by an amazing <a href="https://github.com/orgs/react-boilerplate/teams/core">team of developers</a>.</sub>
 </div>
 
+## Differences from react-boilerplate
+
+This project is a fork of react-boilerplate with experimental support for plugins.  See [react-redux-auth0-plugin](https://github.com/rcodesmith/react-redux-auth0-plugin) for an example.
+
+Proper documentation coming soon...
+
 ## Features
 
 <dl>
