@@ -10,6 +10,8 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import globalReducer from 'containers/App/reducer';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 
+import { getGlobalReducers } from './plugins';
+
 /*
  * routeReducer
  *
@@ -17,6 +19,8 @@ import languageProviderReducer from 'containers/LanguageProvider/reducer';
  * The change is necessitated by moving to react-router-redux@4
  *
  */
+
+const pluginGlobalReducers = getGlobalReducers();
 
 // Initial routing state
 const routeInitialState = fromJS({
@@ -47,5 +51,6 @@ export default function createReducer(asyncReducers) {
     global: globalReducer,
     language: languageProviderReducer,
     ...asyncReducers,
+    ...pluginGlobalReducers,
   });
 }

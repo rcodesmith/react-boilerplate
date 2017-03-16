@@ -8,8 +8,6 @@
 // Needed for redux-saga es6 generator support
 import 'babel-polyfill';
 
-import { initPlugins, postAppInitHook } from './plugins';
-
 // Import all the third party stuff
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -46,6 +44,8 @@ import './global-styles';
 
 // Import routes
 import createRoutes from './routes';
+
+import { initPlugins, postAppInitHook } from './plugins';
 
 initPlugins();
 
