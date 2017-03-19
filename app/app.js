@@ -45,6 +45,10 @@ import './global-styles';
 // Import routes
 import createRoutes from './routes';
 
+import { initPlugins, postAppInitHook } from './plugins';
+
+initPlugins();
+
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
 const openSansObserver = new FontFaceObserver('Open Sans', {});
@@ -127,3 +131,6 @@ if (!window.Intl) {
 if (process.env.NODE_ENV === 'production') {
   require('offline-plugin/runtime').install(); // eslint-disable-line global-require
 }
+
+// TODO: We probably need to wait on promises above for it to be true post-init hook
+postAppInitHook(App);

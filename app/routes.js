@@ -4,6 +4,8 @@
 // about the code splitting business
 import { getAsyncInjectors } from './utils/asyncInjectors';
 
+import { getPluginRoutes, getGlobalSagaModules } from './plugins';
+
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
 };
@@ -12,9 +14,19 @@ const loadModule = (cb) => (componentModule) => {
   cb(null, componentModule.default);
 };
 
+function extractSagas(sagaModules) {
+  return sagaModules.reduce((sagas, sagaModule) => {
+    const moduleSagas = sagaModule.default;
+    return sagas.concat(moduleSagas);
+  }, []);
+}
+
+
 export default function createRoutes(store) {
   // create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store);
+
+  const pluginGlobalRoutes = getPluginRoutes(loadModule, errorLoading, injectSagas);
 
   return [
     {
