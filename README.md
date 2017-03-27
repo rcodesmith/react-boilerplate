@@ -139,6 +139,15 @@ You should now see a 'Login' link on the home page (e.g. 'http://localhost:3000/
 it should pop-up the Auth0 login dialog.  Once logged in, the page will refresh, show your user nickname from
 Auth0, and show a Logout button.
 
+### Plugins: how they work
+
+Plugins get an opportunity to provide additional behavior at certain lifecycle points, specifically:
+
+* Init: Invoked when the app is initializing, from app/app.js
+* Post-application init: Invoked when the app has loaded.  Called from app/app.js
+* Global reducers: Reducers returned by getGlobalReducers() are included in every route
+* Global sagas: Sagas returned by getGlobalSagaModules() are included in every route
+
 ## Features
 
 <dl>
