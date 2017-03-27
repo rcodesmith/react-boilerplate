@@ -51,9 +51,93 @@
 
 ## Differences from react-boilerplate
 
-This project is a fork of react-boilerplate with experimental support for plugins.  See [react-redux-auth0-plugin](https://github.com/rcodesmith/react-redux-auth0-plugin) for an example.
+This project is a fork of react-boilerplate with experimental support for plugins.
+See [react-redux-auth0-plugin](https://github.com/rcodesmith/react-redux-auth0-plugin) for an example, and
+the Plugins section below on how to use plugins.
 
-Proper documentation coming soon...
+
+
+## Plugins
+
+Plugins allow additional features to be added to the application.  A plugin may include:
+* Reducers
+* Sagas
+* Components (container and simple)
+* Selectors
+* Actions
+
+Following are the steps to install and activate a plugin, using react-redux-auth0-plugin as an example:
+
+1. Add the plugin to pluginsConfig.js along with any plugin-specific configuration entries
+
+Copy pluginsConfig-sample.js to pluginsConfig.js, uncomment the sample configuration for the
+react-redux-auth0-plugin, and set clientId, domain, redirectUrl with values for your Auth0 account and application.
+
+```
+cp app/pluginsConfig-sample.js app/pluginsConfig.js
+# Edit app/pluginsConfig.js
+
+```
+
+2. Add the plugin dependency
+
+Add the react-redux-auth0-plugin dependency.
+
+```shell
+yarn add react-redux-auth0-plugin
+```
+
+3. Update pages to use plugin components as needed
+
+Edit app/containers/HomePage/index.js to add the sample auth controls from react-redux-auth0-plugin:
+
+```
+import { ConnectedAuthControls } from 'react-redux-auth0-plugin';
+
+...
+
+  // Add to JSX:
+        <div>
+          <ConnectedAuthControls/>
+        </div>
+```
+
+4. Update any routes that depend on the plugins
+
+Modify app/routes.js to include the plugin sagas for any routes that need to use the plugin.  Note in the code below
+how the plugin global saga modules are concatenated to the other modules, then the sagas are extracted from the saga
+modules.
+
+```javascript
+    {
+      path: '/',
+      name: 'home',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/HomePage/reducer'),
+          import('containers/HomePage'),
+          import('containers/HomePage/sagas'),
+        ].concat(getGlobalSagaModules()));
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, component, ...sagaModules]) => {
+          injectReducer('home', reducer.default);
+          const sagas = extractSagas(sagaModules);
+          injectSagas(sagas);
+
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+```
+
+5. Test
+
+You should now see a 'Login' link on the home page (e.g. 'http://localhost:3000/').  When you click on it,
+it should pop-up the Auth0 login dialog.  Once logged in, the page will refresh, show your user nickname from
+Auth0, and show a Logout button.
 
 ## Features
 
